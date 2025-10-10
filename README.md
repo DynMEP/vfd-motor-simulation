@@ -530,5 +530,3 @@ For questions, issues, or suggestions:
 **Version:** 3.0.0  
 **Last Updated:** October 10, 2025
 
-## 🤝 Let's Collaborate
-Got a renewable energy challenge or need custom simulations? Explore, fork, or contribute to `github.com/DynMEP/GreenPowerHub`! Submit pull requests, open issues, or reach out via GitHub Issues for consulting. Check my LinkedIn post (linkedin.com/in/alfonso-davila-3a121087) for the launch announcement!
