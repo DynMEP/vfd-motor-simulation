@@ -375,6 +375,18 @@ RAMP_TIME = 10  # seconds
 V_BOOST = 0.20  # 20% boost
 ```
 
+## 📊 Example Results
+
+### VFD Benefits Summary
+
+| Metric | DOL Starting | VFD Starting | Improvement |
+|--------|-------------|--------------|-------------|
+| Peak Current | 6.5× FLA | 1.23× FLA | **81% reduction** |
+| Starting Time | ~5 seconds | 30 seconds | Controlled |
+| Mechanical Shock | Severe | Minimal | **Significantly reduced** |
+| Voltage Sag | 30-40% | <5% | **Minimal impact** |
+| Repeatability | Variable | Consistent | **Predictable** |
+
 ## 📖 Documentation
 
 ### Key Functions
@@ -508,18 +520,6 @@ For questions, issues, or suggestions:
 - [NEMA Motor Standards](https://www.nema.org/)
 - [Induction Motor Theory](https://en.wikipedia.org/wiki/Induction_motor)
 - [Variable Frequency Drives](https://en.wikipedia.org/wiki/Variable-frequency_drive)
-
-## 📊 Example Results
-
-### VFD Benefits Summary
-
-| Metric | DOL Starting | VFD Starting | Improvement |
-|--------|-------------|--------------|-------------|
-| Peak Current | 6.5× FLA | 1.23× FLA | **81% reduction** |
-| Starting Time | ~5 seconds | 30 seconds | Controlled |
-| Mechanical Shock | Severe | Minimal | **Significantly reduced** |
-| Voltage Sag | 30-40% | <5% | **Minimal impact** |
-| Repeatability | Variable | Consistent | **Predictable** |
 
 ---
 
