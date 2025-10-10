@@ -224,9 +224,10 @@ Timestamped CSV files include:
 ### Quick Look at Results
 
 ![VFD Simulation Dashboard](images/vfd_dashboard_v2.png)
-*6-panel visualization showing VFD vs DOL comparison*
+*VFD- Controlled Motor Startup Simulation*
+
 ![VFD Simulation Dashboard](images/vfd_dashboard_v3.png)
-*visualization showing VFD output*
+*6-panel visualization showing VFD vs DOL comparison*
 
 ### Key Findings
 - **81% reduction** in peak current vs DOL starting
