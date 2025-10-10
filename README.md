@@ -224,7 +224,7 @@ Timestamped CSV files include:
 ### Quick Look at Results
 
 ![VFD Simulation Dashboard](images/vfd_dashboard_v2.png)
-*VFD- Controlled Motor Startup Simulation*
+*VFD-Controlled Motor Startup Simulation*
 
 ![VFD Simulation Dashboard](images/vfd_dashboard_v3.png)
 *6-panel visualization showing VFD vs DOL comparison*
@@ -495,11 +495,6 @@ Licensed under the MIT License. See LICENSE for details.
 **Email**: davila.alfonso@gmail.com  
 **LinkedIn**: www.linkedin.com/in/alfonso-davila-3a121087  
 **GitHub**: github.com/DynMEP  
-
-## 🙏 Acknowledgments
-
-- Based on fundamental induction motor theory
-- Inspired by industrial motor control applications
 
 ## 📞 Support
 
