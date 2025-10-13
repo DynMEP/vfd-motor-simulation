@@ -526,5 +526,5 @@ For questions, issues, or suggestions:
 **⭐ If you find this simulation useful, please consider giving it a star!**
 
 **Version:** 3.0.0  
-**Last Updated:** October 10, 2025
+
 
