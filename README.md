@@ -105,7 +105,7 @@ python vfd_simulation_v2.py
 
 ### Quick Look at Results
 
-![VFD vs Soft Starter Comparison](images/vfd_vs_softstarter_dashboard.png)
+![VFD vs Soft Starter Comparison](images/vfd_dashboard_v4.png)
 *6-panel visualization comparing VFD and Soft Starter performance*
 
 ### Key Findings
@@ -586,13 +586,6 @@ Licensed under the MIT License. See LICENSE for details.
 **Email**: davila.alfonso@gmail.com  
 **LinkedIn**: [linkedin.com/in/alfonso-davila-3a121087](https://www.linkedin.com/in/alfonso-davila-3a121087)  
 **GitHub**: [github.com/DynMEP](https://github.com/DynMEP)  
-
-## 🙏 Acknowledgments
-
-Special thanks to the LinkedIn engineering community for valuable feedback:
-- **Colin J. Tuck** - SCR soft starter insights that led to v4.0
-- **alan spicer** - Real-world VFD overload requirements and thermal cycling expertise
-- **Gleb Strunkin** - Quasi-frequency starter discussion and international perspective
 
 Based on fundamental induction motor theory and inspired by industrial motor control applications.
 
