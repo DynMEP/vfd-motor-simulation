@@ -8,30 +8,39 @@
 ![GitHub issues](https://img.shields.io/github/issues/DynMEP/vfd-motor-simulation)
 ![GitHub stars](https://img.shields.io/github/stars/DynMEP/vfd-motor-simulation?style=social)
 
-A comprehensive Python-based simulation of Variable Frequency Drive (VFD) controlled motor startup for high-power induction motors, with comparative analysis against Direct-On-Line (DOL) starting methods.
+A comprehensive Python-based simulation comparing Variable Frequency Drive (VFD) and Soft Starter methods for high-power induction motors, with detailed analysis of performance, costs, and energy consumption.
 
 ## 📋 Overview
 
-This simulation suite provides accurate modeling of VFD-controlled startup for an 800HP (596.6 kW) three-phase induction motor. It's designed for:
+This simulation suite provides accurate modeling of motor startup methods for an 800HP (596.6 kW) three-phase induction motor. It's designed for:
 
-- **Electrical Engineers** - System design and analysis
-- **Research Applications** - Motor control studies
-- **Educational Purposes** - Understanding VFD operation
-- **Industrial Planning** - Equipment specification and evaluation
+- **Electrical Engineers** - System design and motor starting method selection
+- **Research Applications** - Motor control studies and comparative analysis
+- **Educational Purposes** - Understanding VFD and soft starter operation
+- **Industrial Planning** - Equipment specification and cost-benefit analysis
 
 ## ✨ Features
 
 ### Core Capabilities
-- ⚡ **Accurate Physics Modeling** - Proper torque-slip characteristics with constant V/f control
+- ⚡ **Accurate Physics Modeling** - Proper torque-slip characteristics with realistic control methods
+- 🔄 **VFD vs Soft Starter Comparison** - Side-by-side performance analysis
+- 💰 **Cost Analysis** - Initial investment and annual operating costs
 - 📊 **Multiple Load Types** - Constant torque, fan/pump (quadratic), and constant power loads
-- 🔄 **VFD vs DOL Comparison** - Side-by-side performance analysis
 - 📈 **Real-time Analysis** - Speed, torque, current, slip, power, and efficiency tracking
 - 💾 **Data Export** - Timestamped CSV files for further analysis
 - 📉 **Professional Visualizations** - 6-panel comparison dashboard
 
-### Version Features
+### Version History
 
-#### v3.0.0 (Full-Featured)
+#### v4.0.0 (Current - VFD vs Soft Starter)
+- **NEW:** Soft starter modeling with SCR voltage control
+- VFD vs Soft Starter direct comparison
+- Cost-benefit analysis
+- Operating cost calculations
+- Clean 6-panel dashboard
+- Decision framework for method selection
+
+#### v3.0.0 (Full-Featured with DOL)
 - Multiple load type simulations
 - DOL starting comparison
 - Energy and efficiency analysis
@@ -77,15 +86,33 @@ If successful, you'll see: `All dependencies OK!`
 
 ### Basic Usage
 
-**Run the full-featured simulation:**
+**Run the VFD vs Soft Starter comparison (v4.0):**
+```bash
+python vfd_simulation_v4.py
+```
+
+**Run the full comparison including DOL (v3.0):**
 ```bash
 python vfd_simulation_v3.py
 ```
 
-**Run the simplified version:**
+**Run the simplified VFD-only version (v2.0):**
 ```bash
 python vfd_simulation_v2.py
 ```
+
+## 🎬 Demo
+
+### Quick Look at Results
+
+![VFD vs Soft Starter Comparison](images/vfd_vs_softstarter_dashboard.png)
+*6-panel visualization comparing VFD and Soft Starter performance*
+
+### Key Findings
+- **VFD**: 1.23× FLA peak current, $70K installed, $14,505/year operating cost
+- **Soft Starter**: 3.30× FLA peak current, $15K installed, $300/year operating cost
+- **For constant speed**: Soft starter saves $55,000 upfront + $14,205/year
+- **For variable speed**: VFD energy savings justify the premium
 
 ## 📊 Configuration
 
@@ -105,13 +132,17 @@ INERTIA = 150               # System inertia (kg·m²)
 LOAD_TORQUE_FACTOR = 0.75   # Load as fraction of rated torque
 
 # VFD Parameters
-RAMP_TIME = 30              # Startup ramp time (seconds)
+VFD_RAMP_TIME = 30          # VFD startup ramp time (seconds)
 V_BOOST = 0.15              # Low-frequency voltage boost (15%)
 
-# Load Type (v3.0.0 only)
+# Soft Starter Parameters
+SOFT_START_RAMP_TIME = 20   # Soft starter ramp time (seconds)
+SOFT_START_INITIAL_VOLTAGE = 0.3  # Initial voltage (30%)
+
+# Load Type (v3.0.0 and v4.0.0)
 LOAD_TYPE = 'constant_torque'  # Options: 'constant_torque', 'fan_pump', 'constant_power'
 
-# Export Settings (v3.0.0 only)
+# Export Settings
 EXPORT_CSV = True           # Enable/disable CSV export
 ```
 
@@ -123,7 +154,8 @@ EXPORT_CSV = True           # Enable/disable CSV export
 LOAD_TYPE = 'constant_torque'
 ```
 - Torque remains relatively constant with speed
-- Most demanding for VFD starting
+- Most demanding for motor starting
+- Common in material handling and process industries
 
 ### Fan/Pump (Quadratic)
 **Applications:** Centrifugal fans, centrifugal pumps, blowers
@@ -132,6 +164,7 @@ LOAD_TYPE = 'fan_pump'
 ```
 - Torque proportional to speed²
 - Easiest to start, lowest energy consumption
+- VFD provides maximum energy savings potential
 
 ### Constant Power
 **Applications:** Machine tools, winders, center-driven winders
@@ -140,60 +173,77 @@ LOAD_TYPE = 'constant_power'
 ```
 - Torque inversely proportional to speed
 - Challenging at low speeds
+- Requires careful motor and drive sizing
 
 ## 📋 Quick Reference Card
 
 ### Essential Commands
 ```bash
-# Run simulation with default settings
-python vfd_simulation_v3.py
+# Run VFD vs Soft Starter comparison (recommended)
+python vfd_simulation_v4.py
 
 # Customize parameters (edit these in the script):
-POWER_HP = 800          # Motor size
-LOAD_TYPE = 'constant_torque'  # Load profile
-RAMP_TIME = 30          # Startup duration
-EXPORT_CSV = True       # Save data
+POWER_HP = 800                    # Motor size
+LOAD_TYPE = 'constant_torque'     # Load profile
+VFD_RAMP_TIME = 30                # VFD startup duration
+SOFT_START_RAMP_TIME = 20         # Soft starter duration
+EXPORT_CSV = True                 # Save data
 ```
 
 ### Key Output Metrics
-- **Peak Current Ratio**: Should be 1.2-1.5× FLA for VFD
+- **VFD Peak Current**: 1.2-1.5× FLA (excellent control)
+- **Soft Starter Peak Current**: 3-4× FLA (good compromise)
 - **Final Slip**: Typically 2-5% at rated load
-- **Efficiency**: Rises from ~30% to ~95% during ramp
-- **Energy**: Higher for VFD due to longer time, but worthwhile
+- **VFD Efficiency**: 94-97% continuous (3-6% losses)
+- **Soft Starter Efficiency**: 100% after bypass (zero continuous losses)
 
 ## 📊 Output
 
 ### Console Summary
 
 ```
-======================================================================
-VFD MOTOR STARTUP SIMULATION SUMMARY
-======================================================================
+=====================================================================================
+VFD vs SOFT STARTER COMPARISON
+=====================================================================================
 Motor Rating:          800 HP (596.6 kW)
 Load Type:             Constant Torque
-Rated Speed:           1746 RPM
+Synchronous Speed:     1800 RPM
 Rated Torque:          3263 Nm
 Full Load Current:     895.6 A
-----------------------------------------------------------------------
-VFD STARTING PERFORMANCE:
-  Peak Current:        1104.6 A (1.23 × FLA)
+-------------------------------------------------------------------------------------
+🔵 VFD PERFORMANCE:
+  Peak Current:        1105 A (1.23 × FLA)
   Final Speed:         1729 RPM
   Final Slip:          3.93%
-  Startup Energy:      15927.7 kJ (4.424 kWh)
-----------------------------------------------------------------------
-DOL STARTING PERFORMANCE:
-  Peak Current:        5821.6 A (6.50 × FLA)
-  Starting Time:       ~5.0 seconds
-  Startup Energy:      9808.2 kJ (2.724 kWh)
-----------------------------------------------------------------------
-VFD ADVANTAGES:
-  Current Reduction:   81.0% lower peak current
-  Mechanical Stress:   Significantly reduced
-  Grid Impact:         Minimal voltage sag
-======================================================================
+  Installed Cost:      $70,000
+  Annual Op. Cost:     $14,505 (4% continuous losses)
+-------------------------------------------------------------------------------------
+🟢 SOFT STARTER PERFORMANCE:
+  Peak Current:        2957 A (3.30 × FLA)
+  Final Speed:         1747 RPM
+  Final Slip:          2.96%
+  Installed Cost:      $15,000
+  Annual Op. Cost:     $300 (bypassed after start)
+-------------------------------------------------------------------------------------
+💡 RECOMMENDATIONS:
+  FOR CONSTANT-SPEED APPLICATIONS:
+    ✓ Soft Starter is the CLEAR WINNER
+      - Saves $55,000 upfront + $14,205/year
+  FOR VARIABLE-SPEED APPLICATIONS:
+    ✓ VFD is ESSENTIAL
+      - Energy savings justify premium (2-3 year ROI)
+=====================================================================================
 ```
 
 ### Visualization Plots
+
+**Version 4.0.0** - 6-panel dashboard:
+1. Speed Response (VFD vs Soft Starter)
+2. Current Draw Comparison
+3. Peak Current Bar Chart
+4. Torque Profiles
+5. Motor Slip During Startup
+6. Performance Comparison Table
 
 **Version 3.0.0** - 6-panel dashboard:
 1. Speed Response (VFD vs DOL)
@@ -209,30 +259,16 @@ VFD ADVANTAGES:
 3. Current Draw
 4. Motor Slip
 
-### CSV Export (v3.0.0)
+### CSV Export
 
 Timestamped CSV files include:
 - Time, Frequency, Speed (RPM)
 - Slip (%), Torque (Nm), Load Torque (Nm)
 - Current (A), Power Output (kW), Power Input (kW)
 - Efficiency (%)
+- Voltage (for soft starter analysis)
 
-**Example filename:** `vfd_simulation_20251010_123824.csv`
-
-## 🎬 Demo
-
-### Quick Look at Results
-
-![VFD Simulation Dashboard](images/vfd_dashboard_v2.png)
-*VFD-Controlled Motor Startup Simulation*
-
-![VFD Simulation Dashboard](images/vfd_dashboard_v3.png)
-*6-panel visualization showing VFD vs DOL comparison*
-
-### Key Findings
-- **81% reduction** in peak current vs DOL starting
-- **Controlled acceleration** eliminates mechanical shock
-- **Minimal grid impact** - voltage sag reduced from 30-40% to <5%
+**Example filename:** `vfd_vs_softstarter_20251027_162259.csv`
 
 ## 🔬 Technical Details
 
@@ -250,10 +286,17 @@ where:
 - `c = 0.08` (starting torque adjustment)
 - `s` = slip
 
-**Constant V/f Control:**
+**VFD Control (Constant V/f):**
 - Voltage and frequency scale linearly
 - Maintains constant magnetic flux
 - Low-frequency voltage boost for starting torque
+- Frequency ramp from 0 to 60 Hz
+
+**Soft Starter Control (SCR Voltage Control):**
+- Full frequency (60 Hz) operation
+- Voltage ramp via SCR phase-angle control
+- Torque scales with voltage squared (V²)
+- Bypassed after startup (zero continuous losses)
 
 **Equation of Motion:**
 ```
@@ -263,32 +306,49 @@ J·(dω/dt) = T_em - T_load - D·ω
 ### Key Assumptions
 
 1. **Simplified Current Model** - Based on torque and magnetizing components
-2. **Constant V/f Ratio** - Typical for general-purpose VFD operation
-3. **Fixed Power Factor** - 0.88 assumed throughout startup
-4. **Linear Ramp** - Frequency increases linearly from 0 to 60 Hz
-5. **Ideal VFD** - No switching harmonics or dead-time effects
+2. **VFD: Constant V/f Ratio** - Typical for general-purpose VFD operation
+3. **Soft Starter: Voltage Control** - SCR phase-angle control with V² torque relationship
+4. **Fixed Power Factor** - 0.88 assumed throughout startup
+5. **Linear Ramps** - VFD frequency and soft starter voltage increase linearly
+6. **Ideal Devices** - No switching harmonics or dead-time effects modeled
+
+### Performance Comparison
+
+| Parameter | VFD | Soft Starter | Winner |
+|-----------|-----|--------------|--------|
+| Peak Current | 1.23× FLA | 3.30× FLA | VFD |
+| Installed Cost | $70,000 | $15,000 | Soft Starter |
+| Annual Operating Cost | $14,505 | $300 | Soft Starter |
+| Continuous Losses | 3-6% | 0% (bypassed) | Soft Starter |
+| Speed Control | Yes | No | VFD |
+| Starting Time | 30s | 20s | Soft Starter |
+| Complexity | High | Low | Soft Starter |
+| Reliability | Good | Excellent | Soft Starter |
 
 ## ✅ Validation
 
 This simulation has been validated against:
 
 - **IEEE standards** for motor starting
-- **Manufacturer VFD specifications** (ABB, Siemens, Allen-Bradley)
+- **Manufacturer specifications** (ABB, Siemens, Allen-Bradley, Schneider)
 - **Field measurements** from industrial installations
 - **Published research** on induction motor dynamics
+- **Engineering community feedback** (LinkedIn technical discussions)
 
 Typical accuracy:
 - Peak current: ±5%
 - Final speed: ±2%
 - Starting time: ±10%
+- Cost estimates: ±15% (vary by region and vendor)
 
 ### Limitations
 
-- Does not model VFD switching harmonics
+- Does not model VFD or soft starter switching harmonics
 - Simplified thermal effects
 - No rotor resistance variation with temperature
 - Ideal voltage source (infinite grid strength)
 - No consideration of cable impedance
+- Soft starter current model simplified during voltage ramp
 
 ## ⚡ Performance
 
@@ -312,24 +372,28 @@ Typical execution times on modern hardware:
 ## 📚 Use Cases
 
 ### 1. System Design
-- Determine VFD rating requirements
+- Determine optimal starting method (VFD vs Soft Starter)
 - Evaluate electrical infrastructure capacity
 - Assess mechanical system compatibility
+- Cost-benefit analysis for equipment selection
 
 ### 2. Energy Analysis
 - Compare starting energy consumption
-- Evaluate efficiency during acceleration
-- Optimize ramp time for energy/time trade-offs
+- Evaluate continuous operating losses
+- Calculate total cost of ownership
+- Optimize for energy efficiency
 
 ### 3. Educational
-- Understand VFD operation principles
-- Visualize motor dynamics
-- Compare starting methods
+- Understand VFD and soft starter operation principles
+- Visualize motor dynamics during startup
+- Compare different starting methods
+- Learn motor control fundamentals
 
 ### 4. Research
 - Baseline for advanced control strategies
 - Test parameter variations
 - Validate experimental results
+- Develop new starting algorithms
 
 ## 📖 Citation
 
@@ -342,7 +406,7 @@ If you use this simulation in your research or publication, please cite:
   year = {2025},
   publisher = {GitHub},
   url = {https://github.com/DynMEP/vfd-motor-simulation},
-  version = {3.0.0}
+  version = {4.0.0}
 }
 ```
 
@@ -355,7 +419,7 @@ If you use this simulation in your research or publication, please cite:
 POWER_HP = 200
 VOLTAGE = 460
 POLES = 4
-INERTIA = 50  # Scale with motor size
+INERTIA = 40  # Scale with motor size (~0.2 × HP)
 ```
 
 ### For Different Applications
@@ -363,62 +427,69 @@ INERTIA = 50  # Scale with motor size
 ```python
 # Example: Variable torque fan application
 LOAD_TYPE = 'fan_pump'
-RAMP_TIME = 20  # Faster ramp acceptable
-LOAD_TORQUE_FACTOR = 0.6  # Lower load
+VFD_RAMP_TIME = 20  # Faster ramp acceptable
+SOFT_START_RAMP_TIME = 15
+LOAD_TORQUE_FACTOR = 0.6  # Lower load at startup
 ```
 
 ### For Different VFD Settings
 
 ```python
-# Example: Aggressive starting
-RAMP_TIME = 10  # seconds
+# Example: Aggressive VFD starting
+VFD_RAMP_TIME = 10  # seconds
 V_BOOST = 0.20  # 20% boost
+
+# Example: Conservative soft starter
+SOFT_START_RAMP_TIME = 30  # seconds
+SOFT_START_INITIAL_VOLTAGE = 0.4  # 40% initial
 ```
-
-## 📊 Example Results
-
-### VFD Benefits Summary
-
-| Metric | DOL Starting | VFD Starting | Improvement |
-|--------|-------------|--------------|-------------|
-| Peak Current | 6.5× FLA | 1.23× FLA | **81% reduction** |
-| Starting Time | ~5 seconds | 30 seconds | Controlled |
-| Mechanical Shock | Severe | Minimal | **Significantly reduced** |
-| Voltage Sag | 30-40% | <5% | **Minimal impact** |
-| Repeatability | Variable | Consistent | **Predictable** |
 
 ## 📖 Documentation
 
 ### Key Functions
 
-**`motor_dynamics(state, t, freq_func, load_torque, load_type)`**
-- Computes motor acceleration based on torque balance
+**`vfd_motor_dynamics(state, t, base_load_torque, load_type, ramp_time)`**
+- Computes VFD motor acceleration based on frequency control
+- Implements constant V/f control with voltage boost
+- Returns rate of change of angular velocity
+
+**`soft_start_motor_dynamics(state, t, base_load_torque, load_type, ramp_time)`**
+- Computes soft starter motor acceleration based on voltage control
+- Implements SCR phase-angle control (V² torque relationship)
 - Returns rate of change of angular velocity
 
 **`get_load_torque(speed_ratio, base_torque, load_type)`**
 - Calculates load torque based on speed and application
-- Supports three load profiles
+- Supports three load profiles (constant torque, fan/pump, constant power)
+- Returns effective load torque at given speed
 
-**`simulate_dol_start()`** (v3.0.0)
-- Generates DOL starting profile for comparison
-- Returns time, speed, current, and torque arrays
+**`calculate_metrics(time, omega_rad, method, ramp_time)`**
+- Calculates current, torque, power, efficiency, and slip
+- Handles both VFD and soft starter control methods
+- Returns complete performance arrays
 
 ## ❓ FAQ
 
 **Q: Can I use this for motors other than 800HP?**  
 A: Yes! Simply change `POWER_HP` and adjust `INERTIA` accordingly. For rough estimation: `INERTIA ≈ 0.2 × POWER_HP`
 
-**Q: Why does VFD use more energy than DOL?**  
-A: The longer ramp time means more time operating at low efficiency. However, the energy difference (~$0.20) is negligible compared to benefits.
+**Q: Why does VFD have higher operating costs than soft starter?**  
+A: VFDs have continuous losses (3-6%) because they're always in the circuit. Soft starters are bypassed after startup, so they have zero continuous losses. However, if you use VFD speed control to reduce motor speed, the energy savings far exceed the VFD losses.
+
+**Q: Which method should I choose for my application?**  
+A: **Constant speed forever?** → Soft Starter (best value). **Any variable speed needs?** → VFD (energy savings justify cost). **Weak electrical system?** → VFD (lowest inrush). Use the simulation to compare for your specific parameters!
 
 **Q: Can I simulate frequency > 60Hz?**  
-A: Yes, but the model assumes constant V/f. For field weakening (>60Hz), additional modifications are needed.
+A: Yes, but the model assumes constant V/f. For field weakening (>60Hz), additional modifications are needed to handle the flux reduction region.
 
-**Q: How accurate is the DOL comparison?**  
-A: The DOL model is simplified but representative. Actual DOL behavior varies with grid strength and motor design.
+**Q: How accurate is the soft starter model?**  
+A: The soft starter current model is simplified during the voltage ramp but provides realistic peak currents (3-4× FLA) and overall behavior. For detailed harmonic analysis, more sophisticated models would be needed.
 
 **Q: Can I use this for motor braking/deceleration?**  
-A: Current version models acceleration only. Braking requires regenerative/dynamic braking models.
+A: Current version models acceleration only. Braking requires regenerative/dynamic braking models and would be a good future enhancement.
+
+**Q: What about other starting methods (autotransformer, wye-delta)?**  
+A: Version 4.0 focuses on the most practical modern comparison (VFD vs Soft Starter). Other methods could be added based on community interest!
 
 ## ⚠️ Troubleshooting
 
@@ -445,12 +516,16 @@ pip install --upgrade scipy
 - Check that `LOAD_TORQUE_FACTOR` < 1.0
 - Verify `INERTIA` value is reasonable (typically 0.1-0.3 × POWER_HP for most systems)
 - Ensure `V_BOOST` is not too high (recommended: 0.10-0.20)
-- Reduce `RAMP_TIME` if motor fails to start
+- Reduce ramp times if motor fails to start
 
 **"RuntimeWarning: invalid value encountered"**
 - This can occur at very low frequencies. The simulation handles this automatically, but if persistent:
   - Increase the minimum frequency threshold in `motor_dynamics`
   - Adjust initial conditions
+
+**Figure layout warning**
+- The table subplot may trigger a layout warning - this is cosmetic and doesn't affect results
+- Already handled in v4.0 with `plt.subplots_adjust()`
 
 ### Getting Help
 
@@ -466,34 +541,38 @@ If you encounter issues not listed here:
 
 Contributions are welcome! Areas for enhancement:
 
-- [ ] GUI interface
-- [ ] Additional motor models (synchronous, PM motors)
+- [ ] GUI interface with real-time parameter adjustment
+- [ ] Additional starting methods (autotransformer, wye-delta, reactor)
 - [ ] Advanced VFD control (sensorless FOC, DTC)
-- [ ] Thermal modeling
-- [ ] Harmonic analysis
+- [ ] Thermal modeling with temperature rise
+- [ ] Harmonic analysis and power quality metrics
 - [ ] Real-time hardware integration (EPICS, Modbus)
+- [ ] Motor thermal limit modeling (start frequency limits)
+- [ ] Multi-motor simulation
+- [ ] Web-based interactive dashboard
 
 ## 🗺️ Roadmap
 
 ### Planned Features
 
-**Version 3.1.0** (Q1 2026)
-- [ ] GUI interface with real-time parameter adjustment
+**Version 4.1.0** (Q1 2026)
+- [ ] GUI interface for parameter adjustment
 - [ ] Additional motor types (wound rotor, synchronous)
-- [ ] Harmonic analysis and power quality metrics
-- [ ] Parameter sweep and optimization tools
+- [ ] Autotransformer and wye-delta starting methods
+- [ ] Enhanced harmonic analysis
 
-**Version 3.2.0** (Q2 2026)
+**Version 4.2.0** (Q2 2026)
 - [ ] Multi-motor simulation
-- [ ] Thermal modeling with temperature rise
-- [ ] Advanced VFD control strategies (sensorless vector control)
-- [ ] Regenerative braking simulation
+- [ ] Thermal modeling with duty cycle analysis
+- [ ] Parameter sweep and optimization tools
+- [ ] Real-time cost calculator with regional energy prices
 
-**Version 4.0.0** (Future)
+**Version 5.0.0** (Future)
 - [ ] Real-time hardware integration (Modbus, EPICS)
 - [ ] Web-based interactive dashboard
 - [ ] Machine learning-based parameter optimization
 - [ ] Integration with SCADA systems
+- [ ] Mobile app for field calculations
 
 **Want to contribute?** Check the [Contributing](#-contributing) section or open a feature request issue!
 
@@ -505,14 +584,24 @@ Licensed under the MIT License. See LICENSE for details.
 
 **Author**: Alfonso Antonio Davila Vera  
 **Email**: davila.alfonso@gmail.com  
-**LinkedIn**: www.linkedin.com/in/alfonso-davila-3a121087  
-**GitHub**: github.com/DynMEP  
+**LinkedIn**: [linkedin.com/in/alfonso-davila-3a121087](https://www.linkedin.com/in/alfonso-davila-3a121087)  
+**GitHub**: [github.com/DynMEP](https://github.com/DynMEP)  
+
+## 🙏 Acknowledgments
+
+Special thanks to the LinkedIn engineering community for valuable feedback:
+- **Colin J. Tuck** - SCR soft starter insights that led to v4.0
+- **alan spicer** - Real-world VFD overload requirements and thermal cycling expertise
+- **Gleb Strunkin** - Quasi-frequency starter discussion and international perspective
+
+Based on fundamental induction motor theory and inspired by industrial motor control applications.
 
 ## 📞 Support
 
 For questions, issues, or suggestions:
 - Open an issue on GitHub
 - Email: davila.alfonso@gmail.com
+- LinkedIn: Direct message for consulting inquiries
 
 ## 🔗 Related Resources
 
@@ -520,11 +609,41 @@ For questions, issues, or suggestions:
 - [NEMA Motor Standards](https://www.nema.org/)
 - [Induction Motor Theory](https://en.wikipedia.org/wiki/Induction_motor)
 - [Variable Frequency Drives](https://en.wikipedia.org/wiki/Variable-frequency_drive)
+- [Soft Starters](https://en.wikipedia.org/wiki/Soft_starter)
+
+## 📊 Example Results
+
+### VFD vs Soft Starter Benefits Summary
+
+| Metric | VFD | Soft Starter | Best For |
+|--------|-----|--------------|----------|
+| Peak Current | 1.23× FLA | 3.30× FLA | VFD (lower) |
+| Installed Cost | $70,000 | $15,000 | Soft Starter (79% cheaper) |
+| Annual Operating Cost | $14,505 | $300 | Soft Starter (98% cheaper) |
+| Starting Time | 30s | 20s | Soft Starter (faster) |
+| Speed Control | Yes | No | VFD (only option) |
+| Continuous Losses | 3-6% | 0% | Soft Starter (bypassed) |
+| Complexity | High | Low | Soft Starter (simpler) |
+| Reliability | Good | Excellent | Soft Starter (fewer parts) |
+| Maintenance | Moderate | Low | Soft Starter (less complex) |
+
+### Decision Matrix
+
+**For Constant-Speed Applications:**
+- ✅ **Soft Starter**: Saves $55K upfront + $14K/year
+- ⚠️ **VFD**: Only if future speed control anticipated or very low inrush required
+
+**For Variable-Speed Applications:**
+- ✅ **VFD**: Energy savings typically $20K-$50K/year, ROI 2-3 years
+- ❌ **Soft Starter**: Cannot provide speed control
 
 ---
 
-**⭐ If you find this simulation useful, please consider giving it a star!**
+**⭐ If you find this simulation useful, please consider giving it a star on GitHub!**
 
-**Version:** 3.0.0  
+**Version:** 4.0.0  
 
+## 🤝 Let's Collaborate
+Got a motor control challenge or need custom simulations? Explore, fork, or contribute! Submit pull requests, open issues, or reach out via GitHub Issues for consulting opportunities.
 
+Check the LinkedIn announcement post for community discussions and real-world applications!
